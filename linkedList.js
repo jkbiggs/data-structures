@@ -6,7 +6,6 @@ function createNode(value) {
     }
 }
 
-
 function createLinkedList() {
     
     return {
