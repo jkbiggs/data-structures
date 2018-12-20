@@ -24,8 +24,11 @@ function createQueue() {
     }
 }
 
+
+module.exports = createQueue
+
 const q = createQueue()
-console.log(q.isEmpty())
+console.log(`Is empty? ${q.isEmpty()}`)
 
 q.enqueue("This is a queue")
 q.enqueue("Help others learn")
@@ -34,4 +37,4 @@ q.enqueue("Be happy")
 console.log(q.dequeue())
 console.log(q.dequeue())
 console.log(q.peek())
-console.log(q.isEmpty())
+console.log(`Is empty? ${q.isEmpty()}`)
