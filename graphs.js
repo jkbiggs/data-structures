@@ -2,6 +2,7 @@
 
 // A collection of nodes aka vertices
 // Nodes may point to other nodes, aka edges
+const createQueue = require('./queues')
 
 function createNode(key) {
     const neighbors = [];
@@ -44,7 +45,7 @@ function createGraph(directed = false) {
             }
         },
 
-        print(){
+        print() {
             return nodes.map(({ key, neighbors }) => {
                 let result = key; 
 
@@ -55,24 +56,82 @@ function createGraph(directed = false) {
                 return result;
             })
             .join('\n');
+        },
+
+        // Breadth First Search
+        //  visit all neighbors before proceeding to the next neighbor and repeating
+        breadthFirstSearch(startingNodeKey, visitFn) {
+            const startingNode = this.getNode(startingNodeKey)
+            
+            // keep track of which nodes we've visited by setting all nodes to false
+            const visited = nodes.reduce((acc, node) => { 
+                acc[node.key] = false 
+                return acc
+            }, {})
+
+            // keep track in order of which nodes we need to visit
+            const queue = createQueue()
+            queue.enqueue(startingNode)
+
+            while (!queue.isEmpty()) {
+                const currentNode = queue.dequeue()
+
+                // set the current node as visited
+                if (!visited[currentNode.key]) {
+                    visitFn(currentNode) 
+                    visited[currentNode.key] = true
+                }
+
+                // add each neighbor to the queue
+                currentNode.neighbors.forEach(node => {
+                    if(!visited[node.key]) {
+                        queue.enqueue(node)
+                    }
+                });
+            }
+
         }
     }
 }
 
-const graph = createGraph(true);
+const directedGraph = createGraph(true);
 
-graph.addNode('Josh');
-graph.addNode('Cali');
-graph.addNode('Crypto');
-graph.addNode('Mochi');
+directedGraph.addNode('Josh');
+directedGraph.addNode('Cali');
+directedGraph.addNode('Crypto');
+directedGraph.addNode('Mochi');
+directedGraph.addNode('Cat treats')
 
-graph.addEdge('Josh', 'Cali');
-graph.addEdge('Cali', 'Josh');
-graph.addEdge('Josh', 'Crypto');
-graph.addEdge('Josh', 'Mochi');
-graph.addEdge('Cali', 'Crypto');
-graph.addEdge('Cali', 'Mochi');
-graph.addEdge('Crypto', 'Josh');
-graph.addEdge('Mochi', 'Cali');
+directedGraph.addEdge('Josh', 'Cali');
+directedGraph.addEdge('Cali', 'Josh');
+directedGraph.addEdge('Josh', 'Crypto');
+directedGraph.addEdge('Josh', 'Mochi');
+directedGraph.addEdge('Cali', 'Crypto');
+directedGraph.addEdge('Cali', 'Mochi');
+directedGraph.addEdge('Crypto', 'Josh');
+directedGraph.addEdge('Mochi', 'Cali');
+directedGraph.addEdge('Crypto', 'Cat treats');
+directedGraph.addEdge('Mochi', 'Cat treats');
 
-console.log(graph.print());
+console.log('***** DIRECTED GRAPH *****')
+console.log(directedGraph.print());
+
+console.log('***** GRAPH *****')
+
+const graph = createGraph()
+const nodes = ['a', 'b', 'c', 'd', 'e', 'f']
+const edges = [
+    ['a', 'b'],
+    ['a', 'e'],
+    ['a', 'f'],
+    ['b', 'd'],
+    ['b', 'e'],
+    ['c', 'b'],
+    ['d', 'c'],
+    ['d', 'e'],
+]
+
+nodes.forEach(node => graph.addNode(node))
+edges.forEach(nodes => graph.addEdge(...nodes))
+
+graph.breadthFirstSearch('a', node => {console.log(node.key)})
