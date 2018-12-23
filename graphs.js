@@ -89,7 +89,27 @@ function createGraph(directed = false) {
                     }
                 });
             }
+        },
+        // Depth First Search
+        depthFirstSearch(startingNodeKey, visitFn) {
+            console.log('starting depth')
+            const startingNode = this.getNode(startingNodeKey)
+            const visited = nodes.reduce((acc, node) => {
+                acc[node.key] = false
+                return acc
+            }, {})
 
+            function explore(node) {
+                if (visited[node.key]){
+                    return
+                }
+
+                visitFn(node)
+                visited[node.key] = true
+
+                node.neighbors.forEach(node => explore(node))
+                explore(startingNode)
+            }
         }
     }
 }
@@ -134,4 +154,5 @@ const edges = [
 nodes.forEach(node => graph.addNode(node))
 edges.forEach(nodes => graph.addEdge(...nodes))
 
-graph.breadthFirstSearch('a', node => {console.log(node.key)})
+graph.breadthFirstSearch('a', node => console.log(node.key))
+graph.depthFirstSearch('a', node => console.log(node.key))
