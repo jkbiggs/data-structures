@@ -5,7 +5,7 @@
 const createQueue = require('./queues')
 
 function createNode(key) {
-    const neighbors = [];
+    const neighbors = []
 
     return {
         key,
@@ -17,8 +17,8 @@ function createNode(key) {
 }
 
 function createGraph(directed = false) {
-    const nodes = [];
-    const edges = [];
+    const nodes = []
+    const edges = []
     
     return {
         directed,
@@ -30,32 +30,32 @@ function createGraph(directed = false) {
         },
 
         getNode(key) {
-            return nodes.find(node => node.key === key);
+            return nodes.find(node => node.key === key)
         },
 
         addEdge(node1key, node2key) {
-            const node1 = this.getNode(node1key);
-            const node2 = this.getNode(node2key);
+            const node1 = this.getNode(node1key)
+            const node2 = this.getNode(node2key)
 
-            node1.addNeighbor(node2);
-            edges.push(`${node1key}-${node2key}`);
+            node1.addNeighbor(node2)
+            edges.push(`${node1key}-${node2key}`)
 
             if (!directed) {
-                node2.addNeighbor(node1);
+                node2.addNeighbor(node1)
             }
         },
 
         print() {
             return nodes.map(({ key, neighbors }) => {
-                let result = key; 
+                let result = key
 
                 if (neighbors.length) {
                     result +=   ` => ${ neighbors.map(neighbor => neighbor.key).join(' ') }`
                 }
 
-                return result;
+                return result
             })
-            .join('\n');
+            .join('\n')
         },
 
         // Breadth First Search
@@ -116,25 +116,25 @@ function createGraph(directed = false) {
 
 const directedGraph = createGraph(true);
 
-directedGraph.addNode('Josh');
-directedGraph.addNode('Cali');
-directedGraph.addNode('Crypto');
-directedGraph.addNode('Mochi');
+directedGraph.addNode('Josh')
+directedGraph.addNode('Cali')
+directedGraph.addNode('Crypto')
+directedGraph.addNode('Mochi')
 directedGraph.addNode('Cat treats')
 
-directedGraph.addEdge('Josh', 'Cali');
-directedGraph.addEdge('Cali', 'Josh');
-directedGraph.addEdge('Josh', 'Crypto');
-directedGraph.addEdge('Josh', 'Mochi');
-directedGraph.addEdge('Cali', 'Crypto');
-directedGraph.addEdge('Cali', 'Mochi');
-directedGraph.addEdge('Crypto', 'Josh');
-directedGraph.addEdge('Mochi', 'Cali');
-directedGraph.addEdge('Crypto', 'Cat treats');
-directedGraph.addEdge('Mochi', 'Cat treats');
+directedGraph.addEdge('Josh', 'Cali')
+directedGraph.addEdge('Cali', 'Josh')
+directedGraph.addEdge('Josh', 'Crypto')
+directedGraph.addEdge('Josh', 'Mochi')
+directedGraph.addEdge('Cali', 'Crypto')
+directedGraph.addEdge('Cali', 'Mochi')
+directedGraph.addEdge('Crypto', 'Josh')
+directedGraph.addEdge('Mochi', 'Cali')
+directedGraph.addEdge('Crypto', 'Cat treats')
+directedGraph.addEdge('Mochi', 'Cat treats')
 
 console.log('***** DIRECTED GRAPH *****')
-console.log(directedGraph.print());
+console.log(directedGraph.print())
 
 console.log('***** GRAPH *****')
 
