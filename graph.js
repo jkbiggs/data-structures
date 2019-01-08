@@ -2,7 +2,7 @@
 
 // A collection of nodes aka vertices
 // Nodes may point to other nodes, aka edges
-const createQueue = require('./queues')
+const createQueue = require('./queue')
 
 function createNode(key) {
     const neighbors = []

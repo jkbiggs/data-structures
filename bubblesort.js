@@ -1,4 +1,5 @@
 // Bubble sort
+const printArray = require('./utils/printArray')
 
 // loop through the array
 // if this item > next item, swap them
@@ -24,14 +25,6 @@ function bubbleSort(array) {
     } while (swapped)
 
     return array
-}
-
-function printArray(array) {
-    let line = ''
-    for(let i = 0; i < array.length; i++) {
-        line += array[i] + ' '
-    }
-    console.log(line)
 }
 
 const numbers = [10, 5, 6, 3, 2, 8, 9, 4, 7, 1]
