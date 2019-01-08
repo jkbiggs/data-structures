@@ -5,7 +5,7 @@ const printArray = require('./utils/printArray')
 // if this item > next item, swap them
 // indicate a swap occurred
 // If a swap occurred, loop through array again
-// continue until no swaps remain
+// continue until no swaps remain O(n^2)
 function bubbleSort(array) {
     let swapped = false
 
