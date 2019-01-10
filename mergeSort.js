@@ -30,6 +30,7 @@ function merge(left, right) {
         }
     }
     
+    // using spread syntax (takes array literals), creates a new array and adds the spreads
     const results = [...sorted, ...left, ...right]
 
     console.log(results)
